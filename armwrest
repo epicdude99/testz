@@ -1,0 +1,44 @@
+-- arm wrestle sim
+
+local KeySystemUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/ui/xrer_mstudio45.lua"))()
+KeySystemUI.New({
+    ApplicationName = "wayne.lua", -- Your Key System Application Name
+    Name = "wayne.lua", -- Your Script name
+    Info = "Get Key For wayne.lua", -- Info text in the GUI, keep empty for default text.
+    DiscordInvite = "", -- Optional.
+    AuthType = "clientid" -- Can select verifycation with ClientId or IP ("clientid" or "ip")
+})
+repeat task.wait() until KeySystemUI.Finished() or KeySystemUI.Closed
+if KeySystemUI.Finished() and KeySystemUI.Closed == false then
+    print("Key verified, can load script")
+    local lplr = game.Players.LocalPlayer
+    local knuckle = game:GetService("Players").LocalPlayer.leaderstats.Knuckles.Value 
+    local hands =  game:GetService("Players").LocalPlayer.leaderstats.Hands.Value 
+    local biceps = game:GetService("Players").LocalPlayer.leaderstats.Biceps.Value
+    local wins = game:GetService("Players").LocalPlayer.leaderstats.Wins.Value
+    
+    local armwrestle = {
+        punchbag = true,
+        punchbagmethod = "Manual", -- Manual, Vip
+        punchbagspeed = 0.2,
+        punchbagtype = "+2 Punch", -- "+2 Punch", "+3 Punch", "+4 Punch", "+5 Punch", "+6 Punch", "+6 Punch (VIP)"
+        cframepos = "-10226.384765625, 6.962204456329346, 113.3166732788086",
+    }
+    
+    function checkType()
+        if armwrestle.punchbagtype == "+1 Punch" then 
+            armwrestle.cframepos = "-10226.384765625, 6.962204456329346, 113.3166732788086"
+        elseif armwrestle.punchbagtype == "+2 Punch" then 
+            armwrestle.cframepos = "-10226.525390625, 6.962204456329346, 123.78736114501953"
+        end
+    end
+    
+    while armwrestle.punchbag do
+        checkType()
+        task.wait(armwrestle.punchbagspeed)
+        lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-10226.384765625, 6.962204456329346, 113.3166732788086)
+        mouse1click()
+    end
+else
+    print("Player closed the GUI.")
+end
